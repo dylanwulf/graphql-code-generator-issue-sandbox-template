@@ -145,19 +145,19 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
-  Item: ( DeepPartial<Package> ) | ( DeepPartial<Product> );
+  Item: ( DeepPartial<Omit<Package, 'components'> & { components: Array<_RefType['PackageComponent']> }> ) | ( DeepPartial<Product> );
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<DeepPartial<Scalars['Boolean']['output']>>;
-  Cart: ResolverTypeWrapper<DeepPartial<Cart>>;
-  CartFulfillment: ResolverTypeWrapper<DeepPartial<CartFulfillment>>;
+  Cart: ResolverTypeWrapper<DeepPartial<Omit<Cart, 'fulfillments'> & { fulfillments: Array<ResolversTypes['CartFulfillment']> }>>;
+  CartFulfillment: ResolverTypeWrapper<DeepPartial<Omit<CartFulfillment, 'lines'> & { lines: Array<ResolversTypes['CartLine']> }>>;
   CartLine: ResolverTypeWrapper<DeepPartial<Omit<CartLine, 'item'> & { item: ResolversTypes['Item'] }>>;
   ID: ResolverTypeWrapper<DeepPartial<Scalars['ID']['output']>>;
   Int: ResolverTypeWrapper<DeepPartial<Scalars['Int']['output']>>;
   Item: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Item']>;
-  Package: ResolverTypeWrapper<DeepPartial<Package>>;
+  Package: ResolverTypeWrapper<DeepPartial<Omit<Package, 'components'> & { components: Array<ResolversTypes['PackageComponent']> }>>;
   PackageComponent: ResolverTypeWrapper<DeepPartial<Omit<PackageComponent, 'item'> & { item: ResolversTypes['Item'] }>>;
   Product: ResolverTypeWrapper<DeepPartial<Product>>;
   Query: ResolverTypeWrapper<{}>;
@@ -167,13 +167,13 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: DeepPartial<Scalars['Boolean']['output']>;
-  Cart: DeepPartial<Cart>;
-  CartFulfillment: DeepPartial<CartFulfillment>;
+  Cart: DeepPartial<Omit<Cart, 'fulfillments'> & { fulfillments: Array<ResolversParentTypes['CartFulfillment']> }>;
+  CartFulfillment: DeepPartial<Omit<CartFulfillment, 'lines'> & { lines: Array<ResolversParentTypes['CartLine']> }>;
   CartLine: DeepPartial<Omit<CartLine, 'item'> & { item: ResolversParentTypes['Item'] }>;
   ID: DeepPartial<Scalars['ID']['output']>;
   Int: DeepPartial<Scalars['Int']['output']>;
   Item: ResolversInterfaceTypes<ResolversParentTypes>['Item'];
-  Package: DeepPartial<Package>;
+  Package: DeepPartial<Omit<Package, 'components'> & { components: Array<ResolversParentTypes['PackageComponent']> }>;
   PackageComponent: DeepPartial<Omit<PackageComponent, 'item'> & { item: ResolversParentTypes['Item'] }>;
   Product: DeepPartial<Product>;
   Query: {};
