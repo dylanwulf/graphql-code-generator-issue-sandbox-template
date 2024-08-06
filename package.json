@@ -2,7 +2,6 @@
   "name": "graphql-codegen-issue-template",
   "version": "1.0.0",
   "scripts": {
-    "generate": "yarn codegen",
     "start": "graphql-codegen --config ./codegen.ts --watch",
     "codegen": "graphql-codegen --config ./codegen.ts",
     "typecheck": "tsc"
