@@ -1,7 +1,14 @@
-query user {
-    user(id: 1) {
+query cart {
+    cartsById(id: "cart1") {
         id
-        username
-        email
+        fulfillments {
+            id
+            lines {
+                id
+                item {
+                    id
+                }
+            }
+        }
     }
 }

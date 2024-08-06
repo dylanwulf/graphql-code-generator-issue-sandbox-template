@@ -1,9 +1,39 @@
 type Query {
-    user(id: ID!): User!
+	cartsById(id: [ID!]!): [Cart]
 }
 
-type User {
+type Cart {
     id: ID!
-    username: String!
-    email: String!
+	fulfillments: [CartFulfillment!]!
+}
+
+type CartFulfillment {
+	id: ID!
+	lines: [CartLine!]!
+}
+
+type CartLine {
+	id: ID!
+	item: Item!
+}
+
+interface Item {
+	description: String!
+	id: ID!
+}
+
+type Product implements Item {
+	description: String!
+	id: ID!
+}
+
+type Package implements Item {
+    description: String!
+    id: ID!
+    components: [PackageComponent!]!
+}
+
+type PackageComponent {
+	item: Item!
+	quantity: Int!
 }
